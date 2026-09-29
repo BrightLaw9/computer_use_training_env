@@ -68,8 +68,11 @@
             <figcaption><strong>Action detail</strong><span>Review inputs, timing, logs, and before/after state.</span></figcaption>
           </figure>
           <figure class="trace-card">
-            <img src="assets/trace-item-action.png" alt="Playwright Trace Viewer showing the meal customization dialog and network log" />
-            <figcaption><strong>Replay</strong><span>Reconstruct decisions with screenshots, state JSON, and network context.</span></figcaption>
+            <div class="trace-media network-evidence">
+              <img src="assets/trace-item-action.png" alt="Playwright Trace Viewer showing captured POST and GET network requests below the meal customization dialog" />
+              <span class="trace-callout">POST / GET request log</span>
+            </div>
+            <figcaption><strong>Network trace</strong><span>The replay surfaces captured POST/GET methods, status, timing, and routes.</span></figcaption>
           </figure>
         </div>
       </section>
