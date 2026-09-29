@@ -232,33 +232,6 @@ video { display: block; width: 100%; background: #000; }
   border-bottom: 1px solid var(--line);
 }
 
-.network-evidence::after {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 22%;
-  border: 3px solid var(--acid-dark);
-  box-shadow: inset 0 0 0 2px rgba(18, 21, 18, 0.55);
-  content: "";
-  pointer-events: none;
-}
-
-.trace-callout {
-  position: absolute;
-  z-index: 1;
-  right: 14px;
-  bottom: 14px;
-  padding: 7px 10px;
-  border-radius: 6px;
-  background: var(--acid);
-  color: var(--ink);
-  font-size: 11px;
-  font-weight: 850;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
 figcaption {
   display: flex;
   justify-content: space-between;
