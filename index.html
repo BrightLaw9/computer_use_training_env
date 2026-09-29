@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A Dockerized computer-use training environment for verifiable food-ordering agents." />
+    <title>Computer Use Training Environment</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Computer Use Training Environment home">
+        <span class="brand-mark" aria-hidden="true">CU</span>
+        <span>Computer Use Training Environment</span>
+      </a>
+      <a class="repo-link" href="https://github.com/BrightLaw9/computer_use_training_env" rel="noreferrer">View repository <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="eyebrow"><span></span> Browser agents, trained in the real interface</div>
+        <h1>Computer Use Training Env.</h1>
+        <p class="hero-copy">A computer-use training environment for agents that search, compare, and enter food orders—reducing the time people spend navigating menus and filling carts by hand.</p>
+        <div class="hero-meta" aria-label="Project stack">
+          <span>Playwright</span>
+          <span>Chromium</span>
+          <span>Docker</span>
+          <span>Sparse rewards</span>
+        </div>
+      </section>
+
+      <section class="video-section" aria-labelledby="demo-title">
+        <div class="section-heading">
+          <p class="section-number">01 / RUN</p>
+          <div>
+            <h2 id="demo-title">One run, end to end</h2>
+            <p>The headed browser run is shown at 3× speed with a small set of trace-grounded annotations.</p>
+          </div>
+        </div>
+        <div class="video-shell">
+          <div class="window-bar" aria-hidden="true">
+            <span></span><span></span><span></span>
+            <p>headed-agent-run.mp4</p>
+          </div>
+          <video controls playsinline preload="metadata">
+            <source src="assets/headed-agent-run.mp4" type="video/mp4" />
+            Your browser does not support embedded video.
+          </video>
+        </div>
+      </section>
+
+      <section class="evidence-section" aria-labelledby="evidence-title">
+        <div class="section-heading">
+          <p class="section-number">02 / TRACE</p>
+          <div>
+            <h2 id="evidence-title">Every action leaves evidence</h2>
+            <p>Playwright captures the action timeline, before/after screenshots, browser state transitions, and a replayable episode artifact.</p>
+          </div>
+        </div>
+
+        <div class="trace-grid">
+          <figure class="trace-card trace-card-wide">
+            <img src="assets/trace-overview.png" alt="Playwright Trace Viewer showing the complete action timeline for the browser-agent run" />
+            <figcaption><strong>Timeline</strong><span>Inspect the full sequence and jump to any browser action.</span></figcaption>
+          </figure>
+          <figure class="trace-card">
+            <img src="assets/trace-search-action.png" alt="Playwright Trace Viewer showing a keyboard text insertion action" />
+            <figcaption><strong>Action detail</strong><span>Review inputs, timing, logs, and before/after state.</span></figcaption>
+          </figure>
+          <figure class="trace-card">
+            <img src="assets/trace-item-action.png" alt="Playwright Trace Viewer showing the meal customization dialog and network log" />
+            <figcaption><strong>Replay</strong><span>Reconstruct decisions with screenshots, state JSON, and network context.</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="reward-section" aria-labelledby="reward-title">
+        <div class="section-heading inverse">
+          <p class="section-number">03 / VERIFY</p>
+          <div>
+            <h2 id="reward-title">Sparse reward. Hard gates.</h2>
+            <p>Reward is binary: <strong>1.0 only when every success gate passes</strong>; otherwise it remains 0.0 and the agent must continue.</p>
+          </div>
+        </div>
+
+        <div class="gate-flow" aria-label="Success verifier flow">
+          <div><span>01</span><strong>Site access</strong></div>
+          <i aria-hidden="true">→</i>
+          <div><span>02</span><strong>Item in cart</strong></div>
+          <i aria-hidden="true">→</i>
+          <div><span>03</span><strong>Cart visibly open</strong></div>
+          <i aria-hidden="true">→</i>
+          <div><span>04</span><strong>Restaurant reputation</strong></div>
+          <i aria-hidden="true">→</i>
+          <div><span>05</span><strong>Safety</strong></div>
+        </div>
+
+        <div class="reward-grid">
+          <article>
+            <p class="mini-label">Success signal</p>
+            <p class="reward-value">1.0</p>
+            <p>All five gates pass together. No partial credit is exposed to the policy.</p>
+          </article>
+          <article>
+            <p class="mini-label">Additional diagnostics</p>
+            <ul>
+              <li>Cart update</li>
+              <li>Checkout state</li>
+              <li>Budget</li>
+              <li>Delivery ETA</li>
+              <li>Location</li>
+              <li>Meal quality</li>
+            </ul>
+          </article>
+          <article>
+            <p class="mini-label">Safety boundary</p>
+            <p>The agent may open the cart, but checkout and final-order controls are blocked. The run never confirms an order.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="isolation-section" aria-labelledby="isolation-title">
+        <div class="section-heading">
+          <p class="section-number">04 / ISOLATE</p>
+          <div>
+            <h2 id="isolation-title">A fresh browser in a box</h2>
+            <p>Each training run launches Chromium inside a disposable Docker environment. The browser is separated from the host, while the OpenAI API key stays in the trusted host process.</p>
+          </div>
+        </div>
+
+        <div class="architecture" role="img" aria-label="Host policy communicates with an isolated Docker browser environment over loopback">
+          <div class="architecture-node">
+            <span>Trusted host</span>
+            <strong>Responses API policy</strong>
+            <small>API key remains here</small>
+          </div>
+          <div class="architecture-link">
+            <span>loopback-only</span>
+            <i aria-hidden="true">⇄</i>
+            <small>random run token</small>
+          </div>
+          <div class="architecture-node accent">
+            <span>Disposable container</span>
+            <strong>BrowserGym + Chromium</strong>
+            <small>read-only filesystem · no new privileges</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="failure-section" aria-labelledby="failure-title">
+        <div class="section-heading">
+          <p class="section-number">05 / LEARN</p>
+          <div>
+            <h2 id="failure-title">What this run exposed</h2>
+            <p>The trace is useful precisely because the run was imperfect.</p>
+          </div>
+        </div>
+
+        <div class="failure-grid">
+          <article>
+            <span class="failure-tag">Constraint miss</span>
+            <h3>A plausible meal still failed verification.</h3>
+            <p>Korean Heat looked suitable, but the stored restaurant evidence did not satisfy the configured reputation gate. Reward stayed at 0.0, and the agent removed it.</p>
+          </article>
+          <article>
+            <span class="failure-tag">Coordinate drift</span>
+            <h3>A transient control moved beneath the cursor.</h3>
+            <p>The agent targeted “View cart.” The control disappeared before execution, so the same coordinates opened Spicy Salmon Bowl instead.</p>
+          </article>
+          <article>
+            <span class="failure-tag">Verifier false negative</span>
+            <h3>The visible cart was not enough.</h3>
+            <p>The final screenshot showed the cart drawer, but the text-based cart-open detector did not recognize it. The recorded run remained at reward 0.0 and reached its API-turn limit.</p>
+          </article>
+        </div>
+
+        <div class="reward-hacking-note">
+          <span>No successful reward hacking observed</span>
+          <p>The model attempted to stop twice while reward was 0.0. The orchestration loop rejected both premature completions and instructed it to continue; no false positive reward was issued.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Computer Use Training Environment</p>
+      <a href="https://github.com/BrightLaw9/computer_use_training_env" rel="noreferrer">GitHub repository <span aria-hidden="true">↗</span></a>
+    </footer>
+  </body>
+</html>
